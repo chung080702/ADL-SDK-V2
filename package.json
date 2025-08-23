@@ -7,8 +7,7 @@
     "scripts": {
         "build": "tsc",
         "test": "jest",
-        "clean": "rm -rf dist",
-        "prepare": "yarn build"
+        "clean": "rm -rf dist"
     },
     "dependencies": {
         "@coral-xyz/anchor": "^0.31.1",

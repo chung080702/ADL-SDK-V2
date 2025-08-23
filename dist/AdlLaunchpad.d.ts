@@ -1,0 +1,44 @@
+import { Connection, PublicKey, TransactionInstruction } from '@solana/web3.js';
+import { DefaiLaunchpadProgram, StakeParams, SwapParams, UnstakeParams, ClaimTokenParams, SimulateSwapParams } from './types';
+import { IdlAccounts } from '@coral-xyz/anchor';
+import type { DefaiLaunchpad } from './idl/defai_launchpad';
+export declare class AdlLaunchpad {
+    _program: DefaiLaunchpadProgram;
+    private configAccount;
+    constructor(connection: Connection);
+    private prepareTokenAccounts;
+    loadConfigAccount(): Promise<{
+        teamWallet: PublicKey;
+        migrator: PublicKey;
+        communityPoolWallet: PublicKey;
+        stakingPoolWallet: PublicKey;
+        platformBuyFee: number;
+        platformSellFee: number;
+        minCurveLimit: BN;
+        lamportAmountConfig: BN;
+        tokenSupplyConfig: BN;
+        tokenDecimalsConfig: number;
+        minWhitelistRoundPeriod: BN;
+        waitingPeriod: BN;
+        creatorFee: number;
+        communityPoolFee: number;
+        agentFee: number;
+        stakingFee: number;
+        softCap: BN;
+        stakingToken: PublicKey;
+        lockPeriod: BN;
+        partyAmountPercent: number;
+        migrationLamport: BN;
+        waitingPeriodToClaim: BN;
+        migrationFee: BN;
+        creatorSwapFee: number;
+    }>;
+    loadBondingCurveAccount(tokenMint: PublicKey): Promise<IdlAccounts<DefaiLaunchpad>['bondingCurve']>;
+    getUserInfoByPool(user: PublicKey, poolTokenMint: PublicKey): Promise<IdlAccounts<DefaiLaunchpad>['stakerInfoV2'] | null>;
+    simulateSwap(params: SimulateSwapParams): Promise<any>;
+    stakeInstruction(params: StakeParams): Promise<TransactionInstruction>;
+    unstakeInstruction(params: UnstakeParams): Promise<TransactionInstruction>;
+    swapPartyInstruction(params: SwapParams): Promise<TransactionInstruction>;
+    swapPublicInstruction(params: SwapParams): Promise<TransactionInstruction>;
+    claimTokenInstruction(params: ClaimTokenParams): Promise<TransactionInstruction>;
+}
